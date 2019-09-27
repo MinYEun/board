@@ -4,6 +4,7 @@ import lombok.Data;
 
 @Data
 public class CommentVO {
+	private String board_id;
 	private String comment_id; //댓글번호
 	private String content;	//댓글내용
 	private String is_delete;	//댓글 삭제여부

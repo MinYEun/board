@@ -10,4 +10,5 @@ public class BoardVO {
 	private String content;	//게시물내용
 	private String is_delete;	//게시물삭제여부
 	private String file_name;	//첨부파일
+	private String count;	//조회수
 }

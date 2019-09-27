@@ -1,4 +1,4 @@
-package com.yjc.board.Service;
+package com.yjc.board.service;
 
 import java.util.List;
 

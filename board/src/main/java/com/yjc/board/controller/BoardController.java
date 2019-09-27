@@ -11,11 +11,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.yjc.board.Service.BoardService;
 import com.yjc.board.domain.BoardVO;
+import com.yjc.board.service.BoardService;
 
 @Controller
-@RequestMapping("/board/*")
 public class BoardController {
 
 	private static final Logger logger = LoggerFactory.getLogger(BoardController.class);
