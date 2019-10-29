@@ -10,12 +10,12 @@ import org.springframework.stereotype.Service;
 import com.yjc.board.domain.BoardVO;
 
 @Service
-public class BoardServiceImplement implements BoardService{
+public class BoardServiceImpl implements BoardService{
 //	private static final String NAMESPACE = "com.yjc.board.mapper.boardMapper";
 	private final SqlSession sqlSession;
 	
 	@Inject
-	public BoardServiceImplement(SqlSession sqlSession) {
+	public BoardServiceImpl(SqlSession sqlSession) {
 		this.sqlSession = sqlSession;
 	}
 	
