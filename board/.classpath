@@ -35,13 +35,6 @@
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="C:/Users/bon300-1/Downloads/OJDBC-Full/ojdbc5.jar"/>
-	<classpathentry kind="lib" path="C:/Users/bon300-1/Downloads/OJDBC-Full/ojdbc6.jar"/>
-	<classpathentry kind="lib" path="C:/Users/bon300-1/Downloads/OJDBC-Full/ons.jar"/>
-	<classpathentry kind="lib" path="C:/Users/bon300-1/Downloads/OJDBC-Full/orai18n.jar"/>
-	<classpathentry kind="lib" path="C:/Users/bon300-1/Downloads/OJDBC-Full/simplefan.jar"/>
-	<classpathentry kind="lib" path="C:/Users/bon300-1/Downloads/OJDBC-Full/ucp.jar"/>
-	<classpathentry kind="lib" path="C:/Users/bon300-1/Downloads/OJDBC-Full/xdb6.jar"/>
 	<classpathentry kind="lib" path="src/main/webapp/resources/jar/ojdbc6-12.1.0.1-atlassian-hosted.jar">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>

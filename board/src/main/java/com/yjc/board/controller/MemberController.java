@@ -13,6 +13,11 @@ public class MemberController {
 	@Autowired
 	MemberService memberService;
 	
+	@RequestMapping("member/insertview.do")
+	public String memberInsertView() {
+		return "register";
+	}
+	
 	@RequestMapping("member/insert.do")
 	public String memberInsert(@ModelAttribute MemberVO memberVO) {
 		memberService.insertMember(memberVO);
