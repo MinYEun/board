@@ -6,7 +6,40 @@
 <mapper namespace="board">
 	<!-- 게시물 목록 데이터 불러오기 -->
 	<select id="boardList" resultType="com.yjc.board.domain.BoardVO">
-		select * from board_view
-		order by board_id desc
+		select * from board
+		order by bno desc
 	</select>
+	
+	<insert id="insert">
+		<selectKey keyProperty="bno" order="BEFORE" resultType="int">
+      		select BOARD_SEQ.nextval from dual
+   		</selectKey>
+   		INSERT INTO board
+   			(bno, title, content, writer)
+   		VALUES
+   			(#{bno}, #{title}, #{content}, #{writer})
+	</insert>
+	
+	<select id="view" resultType="com.yjc.board.domain.BoardVO">
+        SELECT * FROM board 
+        WHERE bno = #{bno}
+    </select>
+    
+     <update id="increaseViewcnt">
+        UPDATE board SET viewcnt = viewcnt + 1 
+        WHERE bno = #{bno}
+    </update>
+    
+    <update id="update">
+        UPDATE board SET
+            title = #{title},
+            content = #{content},
+            writer = #{writer}
+        WHERE bno = #{bno}
+    </update>
+    
+    <delete id="delete">
+        DELETE FROM board
+        WHERE bno = #{bno}
+    </delete>
 </mapper>

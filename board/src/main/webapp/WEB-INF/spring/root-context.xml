@@ -13,11 +13,11 @@
 	
 	<!-- Root Context: defines shared resources visible to all other web components -->
 		
-	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
-		<property name="driverClassName" value="net.sf.log4jdbc.sql.jdbcapi.DriverSpy"></property>
-		<property name="url" value="jdbc:log4jdbc:oracle:thin:@database-1.c7pungzjxhk2.ap-northeast-2.rds.amazonaws.com:1521/PRACTICE"></property>
-		<property name="username" value="practice"></property>
-		<property name="password" value="7895admin"></property>
+	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+		<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"></property>
+		<property name="url" value="jdbc:log4jdbc:oracle:thin:board@//localhost:1521/xe"></property>
+		<property name="username" value="board"></property>
+		<property name="password" value="1234"></property>
 	</bean>
 
 	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
