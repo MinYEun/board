@@ -1,14 +1,58 @@
 package com.yjc.board.domain;
 
+import java.util.Date;
+
 import lombok.Data;
 
-@Data
 public class BoardVO {
-	private String board_id;	//°Ô½Ã¹°¹øÈ£
-	private String id;	//°Ô½Ã¹°ÀÛ¼ºÀÚ
-	private String title;	//°Ô½Ã¹°Á¦¸ñ
-	private String content;	//°Ô½Ã¹°³»¿ë
-	private String is_delete;	//°Ô½Ã¹°»èÁ¦¿©ºÎ
-	private String file_name;	//Ã·ºÎÆÄÀÏ
-	private String count;	//Á¶È¸¼ö
+	private String bno;	//ê¸€ë²ˆí˜¸
+	private String title;	//ì œëª©
+	private String content;	//ë‚´ìš©
+	private String writer; // ê¸€ì“´ì´
+	private int viewcnt;	//ì¡°íšŒìˆ˜
+	private Date regdate; //ê¸€ì‘ì„±ì¼
+	public String getBno() {
+		return bno;
+	}
+	public void setBno(String bno) {
+		this.bno = bno;
+	}
+	public String getTitle() {
+		return title;
+	}
+	public void setTitle(String title) {
+		this.title = title;
+	}
+	public String getContent() {
+		return content;
+	}
+	public void setContent(String content) {
+		this.content = content;
+	}
+	public String getWriter() {
+		return writer;
+	}
+	public void setWriter(String writer) {
+		this.writer = writer;
+	}
+	public int getViewcnt() {
+		return viewcnt;
+	}
+	public void setViewcnt(int viewcnt) {
+		this.viewcnt = viewcnt;
+	}
+	public Date getRegdate() {
+		return regdate;
+	}
+	public void setRegdate(Date regdate) {
+		this.regdate = regdate;
+	}
+	
+	@Override
+	public String toString() {
+		return "BoardVO [bno=" + bno + ", title=" + title + ", content=" + content + ", writer=" + writer + ", regdate=" 
+					+ regdate + ", viewcnt=" + viewcnt + "]";
+	}
+	
+	
 }
