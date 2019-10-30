@@ -5,7 +5,7 @@
 <head>
 <meta charset="EUC-KR">
 <title>Insert title here</title>
-<script>
+<!-- <script>
     $(document).ready(function(){
         $("#btnLogin").click(function(){
             // 태크.val() : 태그에 입력된 값
@@ -23,16 +23,16 @@
                 return;
             }
             // 폼 내부의 데이터를 전송할 주소
-            document.form1.action="${path}/member/loginCheck.do"
+            document.form1.action="/member/loginCheck.do"
             // 제출
             document.form1.submit();
         });
     });
-</script>
+</script> -->
 </head>
 <body>
 	<h2>로그인</h2>
-	<form name="login" method="post">
+	<form name="login" method="post" action="/member/loginCheck.do">
 		<div class="content">
 			<div>
 				<p>아이디</p>
@@ -40,7 +40,7 @@
 				<p>비밀번호</p>
 				<input type="password" id="password" name="password" />
 				
-				<button type="button" id="btnLogin">로그인</button>
+				<button type="submit" id="btnLogin">로그인</button>
 			</div>
 		</div>
 	</form>

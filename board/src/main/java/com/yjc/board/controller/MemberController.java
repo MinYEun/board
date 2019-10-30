@@ -2,6 +2,7 @@ package com.yjc.board.controller;
 
 import javax.servlet.http.HttpSession;
 
+import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -21,20 +22,20 @@ public class MemberController {
 	@Autowired
 	MemberService memberService;
 	
-	//회원가입
-	@RequestMapping("member/insertview.do")
+	//�쉶�썝媛��엯
+	@RequestMapping("insertview.do")
 	public String memberInsertView() {
 		return "register";
 	}
 	
-	@RequestMapping("member/insert.do")
+	@RequestMapping("insert.do")
 	public String memberInsert(@ModelAttribute MemberVO memberVO) {
 		memberService.insertMember(memberVO);
 		
-		return "redirect:/";
+		return "redirect:/member/login.do";
 	}
 	
-	//로그인
+	//濡쒓렇�씤
 	@RequestMapping("login.do")
 	public String login() {
 		return "login";
@@ -49,10 +50,10 @@ public class MemberController {
 		} else {
 			model.addAttribute("msg", "failure");
 		}
-		return "board";
+		return "redirect:/board/list.do";
 	}
 	
-	//로그아웃
+	//濡쒓렇�븘�썐
 	@RequestMapping("logout.do")
 	public String logout(HttpSession session, Model model) {
 		memberService.logout(session);

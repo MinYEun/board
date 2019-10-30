@@ -23,18 +23,17 @@
 		</tr>
 		
 		<c:forEach var="row" items="${list}">
-			<c:if test="${row.is_delete == 0}">
 				<tr>
 					<td>${row.bno}</td>
 					<td><a href="${path}/board/view.do?bno=${row.bno}">${row.title}</a></td>
-					<td>${row.wirter}</td>
+					<td>${row.writer}</td>
 					<td>
 						<fmt:formatDate value="${row.regdate}" pattern="yyyy-MM-dd"/>
 					</td>	
 					<td>${row.viewcnt}</td>
 				</tr>
-			</c:if>
 		</c:forEach>
 	</table>
+	<a href="/board/insert.do">글쓰기</a>
 </body>
 </html>

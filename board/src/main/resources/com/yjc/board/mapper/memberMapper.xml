@@ -6,9 +6,9 @@
 <mapper namespace="member">
 	<insert id="insertMember">
 		INSERT INTO member
-			(user_id, password, user_name, email, user_regdate)
+			(user_id, password, user_name, email)
 		VALUES
-			(#{user_id}, #{password}, #{user_name}, #{email}, #{user_regdate})
+			(#{user_id}, #{password}, #{user_name}, #{email})
 	</insert>
 	
 	<select id="loginCheck" resultType="String">

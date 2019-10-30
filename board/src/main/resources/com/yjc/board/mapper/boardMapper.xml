@@ -5,7 +5,7 @@
         
 <mapper namespace="board">
 	<!-- 게시물 목록 데이터 불러오기 -->
-	<select id="boardList" resultType="com.yjc.board.domain.BoardVO">
+	<select id="listAll" resultType="com.yjc.board.domain.BoardVO">
 		select * from board
 		order by bno desc
 	</select>

@@ -32,33 +32,37 @@ public class BoardController {
 	public String board(Model model) throws Exception {
 		List<BoardVO> list = boardService.listAll();
 		model.addAttribute("list", list);
-		return "board";
+		return "/board/list";
 	}
 	
-	@RequestMapping(value="insert.do", method=RequestMethod.POST)
-	public String insert(@ModelAttribute BoardVO boardVO) throws Exception{
+	@RequestMapping(value="insert.do")
+	public String insert(@ModelAttribute BoardVO boardVO, Model model) throws Exception{
+		model.addAttribute("list", boardVO);
 		boardService.create(boardVO);
-		return "redirect:list.do";
+		return "redirect:/board/list.do";
 	}
 	
 	@RequestMapping(value="view.do")
 	public String view(@RequestParam int bno, BoardVO boardVO, Model model, HttpSession session) throws Exception{
 		boardService.increaseViewcnt(bno, session);
 		
-		model.addAttribute("view", boardVO);
+		System.out.println("게시글 내용");
+		boardService.read(bno);
+		model.addAttribute("view", boardService.read(bno));
+		System.out.println(boardVO);
 		
-		return "view";
+		return "/board/view";
 	}
 	
 	@RequestMapping(value="update.do")
 	public String update(@ModelAttribute BoardVO boardVO) throws Exception{
 		boardService.update(boardVO);
-		return "redirect:list.do";
+		return "redirect:/board/list.do";
 	}
 	
 	@RequestMapping(value="delete.do")
 	public String delete(@RequestParam int bno) throws Exception{
 		boardService.delete(bno);
-		return "redirect:list.do";
+		return "redirect:/board/list.do";
 	}
 }

@@ -7,8 +7,8 @@
 <title>header</title>
 </head>
 <body>
-	<a href="main">홈</a>
-	<a href="login.jsp">로그인</a>
-	<a href="register.jsp">회원가입</a>
+	<a href="/board/list.do">홈</a>
+	<a href="/member/login.do">로그인</a>
+	<a href="/member/insertview.do">회원가입</a>
 </body>
 </html>

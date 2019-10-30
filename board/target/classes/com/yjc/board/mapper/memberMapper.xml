@@ -6,8 +6,23 @@
 <mapper namespace="member">
 	<insert id="insertMember">
 		INSERT INTO member
-			(user_id, password, user_name, email, user_regdate)
+			(user_id, password, user_name, email)
 		VALUES
-			(#{user_id}, #{password}, #{user_name}, #{email}, #{user_regdate})
+			(#{user_id}, #{password}, #{user_name}, #{email})
 	</insert>
+	
+	<select id="loginCheck" resultType="String">
+		SELECT user_name AS userName from member
+		WHERE user_id = #{user_id} AND password = #{password}
+	</select>
+	
+	<select id="viewMember" resultType="com.yjc.board.domain.MemberVO">
+		SELECT
+			user_name AS userName,
+			user_id AS userId,
+			email AS userEmail,
+			user_regdate AS userRegdate
+		FROM member
+		WHERE user_id = #{user_id} AND password#{password}
+	</select>
 </mapper>
