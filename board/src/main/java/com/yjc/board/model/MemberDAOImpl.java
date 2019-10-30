@@ -1,5 +1,7 @@
 package com.yjc.board.model;
 
+import javax.servlet.http.HttpSession;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -15,4 +17,21 @@ public class MemberDAOImpl implements MemberDAO {
 	public void insertMember(MemberVO memberVO) {
 		sqlSession.insert("member.insertMember", memberVO);
 	}
+
+	@Override
+	public boolean loginCheck(MemberVO memberVO) {
+		String name = sqlSession.selectOne("member.loginCheck", memberVO);
+		return false;
+	}
+
+	@Override
+	public MemberVO viewMember(MemberVO memberVO) {
+		return sqlSession.selectOne("member.viewMember", memberVO);
+	}
+
+	@Override
+	public void logout(HttpSession session) {		
+	}
+	
+	
 }
