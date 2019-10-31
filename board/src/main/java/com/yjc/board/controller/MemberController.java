@@ -1,5 +1,6 @@
 package com.yjc.board.controller;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -42,21 +43,26 @@ public class MemberController {
 	}
 	
 	@RequestMapping("loginCheck.do")
-	public String loginCheck(Model model, MemberVO memberVO, HttpSession session) {
-		boolean result = memberService.loginCheck(memberVO, session);
+	public String loginCheck(Model model, MemberVO memberVO, HttpSession session, HttpServletRequest request) {		
 		
+		
+		boolean result = memberService.loginCheck(memberVO, session);
+
 		if(result == true) {
 			model.addAttribute("msg", "success");
+			return "redirect:/board/list.do";
 		} else {
 			model.addAttribute("msg", "failure");
+			return "redirect:/board/login.do";
 		}
-		return "redirect:/board/list.do";
+		
 	}
 	
 	//濡쒓렇�븘�썐
 	@RequestMapping("logout.do")
 	public String logout(HttpSession session, Model model) {
 		memberService.logout(session);
+		session.invalidate();
 		model.addAttribute("msg", "logout");
 		return "login";
 	}
