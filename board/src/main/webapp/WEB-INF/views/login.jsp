@@ -1,46 +1,42 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="EUC-KR">
 <title>Insert title here</title>
-<!-- <script>
-    $(document).ready(function(){
-        $("#btnLogin").click(function(){
-            // ÅÂÅ©.val() : ÅÂ±×¿¡ ÀÔ·ÂµÈ °ª
-            // ÅÂÅ©.val("°ª") : ÅÂ±×ÀÇ °ªÀ» º¯°æ 
-            var userId = $("#user_id").val();
-            var userPw = $("#password").val();
-            if(userId == ""){
-                alert("¾ÆÀÌµğ¸¦ ÀÔ·ÂÇÏ¼¼¿ä.");
-                $("#user_id").focus(); // ÀÔ·ÂÆ÷Ä¿½º ÀÌµ¿
-                return; // ÇÔ¼ö Á¾·á
-            }
-            if(userPw == ""){
-                alert("¾ÆÀÌµğ¸¦ ÀÔ·ÂÇÏ¼¼¿ä.");
-                $("#password").focus();
-                return;
-            }
-            // Æû ³»ºÎÀÇ µ¥ÀÌÅÍ¸¦ Àü¼ÛÇÒ ÁÖ¼Ò
-            document.form1.action="/member/loginCheck.do"
-            // Á¦Ãâ
-            document.form1.submit();
-        });
-    });
-</script> -->
+<script>
+	$(document).ready(function(){
+		$("#btnLogin").unbind("click").click(function(e) {
+			e.preventDefault();
+			fn_login();
+		});
+	});
+	
+	function fn_login(){
+		if($("#user_id").val().length < 1){
+			alert("ì•„ì´ë””ë¥¼ ì…ë ¥í•´ì£¼ì„¸ìš”");
+		} else if($("#password").val().length < 1) {
+			alert("ë¹„ë°€ë²ˆí˜¸ë¥¼ ì…ë ¥í•´ì£¼ì„¸ìš”");
+		} else {
+			login.setUrl("<c:url value='/member/loginCheck.do' />");
+			login.submit();
+		}
+	}
+</script>
 </head>
+<jsp:include page="board/header.jsp" flush="true" />
 <body>
-	<h2>·Î±×ÀÎ</h2>
-	<form name="login" method="post" action="/member/loginCheck.do">
+	<h2>ë¡œê·¸ì¸</h2>
+	<form id="login" name="login" method="post" action="/member/loginCheck.do">
 		<div class="content">
 			<div>
-				<p>¾ÆÀÌµğ</p>
+				<p>ì•„ì´ë””</p>
 				<input type="text" id="user_id" name="user_id"/>
-				<p>ºñ¹Ğ¹øÈ£</p>
+				<p>ë¹„ë°€ë²ˆí˜¸</p>
 				<input type="password" id="password" name="password" />
 				
-				<button type="submit" id="btnLogin">·Î±×ÀÎ</button>
+				<button type="submit" id="btnLogin">ë¡œê·¸ì¸</button>
 			</div>
 		</div>
 	</form>

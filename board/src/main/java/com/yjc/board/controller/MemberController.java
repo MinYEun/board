@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.yjc.board.domain.BoardVO;
 import com.yjc.board.domain.MemberVO;
@@ -25,7 +26,7 @@ public class MemberController {
 	
 	//�쉶�썝媛��엯
 	@RequestMapping("insertview.do")
-	public String memberInsertView() {
+	public String memberInsertView(@ModelAttribute MemberVO memberVO) {
 		return "register";
 	}
 	
@@ -38,22 +39,24 @@ public class MemberController {
 	
 	//濡쒓렇�씤
 	@RequestMapping("login.do")
-	public String login() {
+	public String login(HttpServletRequest request) {
+
 		return "login";
 	}
 	
 	@RequestMapping("loginCheck.do")
 	public String loginCheck(Model model, MemberVO memberVO, HttpSession session, HttpServletRequest request) {		
+		request.getSession().setAttribute("logininfo", true);
+		session.setAttribute("user_id", memberVO.getUser_id());
 		
 		
-		boolean result = memberService.loginCheck(memberVO, session);
+		MemberVO member = memberService.loginCheck(memberVO, session);
 
-		if(result == true) {
-			model.addAttribute("msg", "success");
+		if(member != null) {
 			return "redirect:/board/list.do";
 		} else {
-			model.addAttribute("msg", "failure");
-			return "redirect:/board/login.do";
+
+			return "redirect:/member/login.do";
 		}
 		
 	}
@@ -62,7 +65,6 @@ public class MemberController {
 	@RequestMapping("logout.do")
 	public String logout(HttpSession session, Model model) {
 		memberService.logout(session);
-		session.invalidate();
 		model.addAttribute("msg", "logout");
 		return "login";
 	}

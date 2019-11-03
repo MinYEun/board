@@ -17,5 +17,6 @@ public interface BoardService {
 	
 	public BoardVO read(int bno) throws Exception;
 	
-	public void increaseViewcnt(int bno, HttpSession session) throws Exception;
+	public int increaseViewcnt(BoardVO boardVO) throws Exception;
+	
 }

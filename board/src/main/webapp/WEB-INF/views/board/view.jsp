@@ -1,52 +1,103 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<jsp:include page="header.jsp" flush="true" />
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="EUC-KR">
 <title>Insert title here</title>
 <script>
-    $(document).ready(function(){
-        $("#btnDelete").click(function(){
-            if(confirm("»èÁ¦ÇÏ½Ã°Ú½À´Ï±î?")){
-                document.view.action = "/board/delete.do";
-                document.view.submit();
-            });
-       });
-</script>
+$(document).ready(function(){
+
+    // ** ëŒ“ê¸€ ì“°ê¸° ë²„íŠ¼ í´ë¦­ ì´ë²¤íŠ¸ (ajaxë¡œ ì²˜ë¦¬)
+    $("#btnReply").click(function(){
+        var replytext=$("#replytext").val();
+        var bno="${view.bno}"
+        var param="replytext="+replytext+"&bno="+bno;
+        $.ajax({                
+            type: "post",
+            url: "/reply/insert.do",
+            data: param,
+            success: function(){
+                alert("ëŒ“ê¸€ì´ ë“±ë¡ë˜ì—ˆìŠµë‹ˆë‹¤.");
+                listReply2();
+            }
+        });
+    });
+	function listReply2(){
+	    $.ajax({
+	        type: "get",
+	        //contentType: "application/json", ==> ìƒëµê°€ëŠ¥(RestControllerì´ê¸°ë•Œë¬¸ì— ê°€ëŠ¥)
+	        url: "/reply/listJson.do?bno=${view.bno}",
+	        success: function(result){
+	            console.log(result);
+	            var output = "<table>";
+	            for(var i in result){
+	                output += "<tr>";
+	                output += "<td>"+result[i].userName;
+	                output += "("+changeDate(result[i].regdate)+")<br>";
+	                output += result[i].replytext+"</td>";
+	                output += "<tr>";
+	            }
+	            output += "</table>";
+	            $("#listReply").html(output);
+	        }
+	    });
+	}
+}
+
+//ìˆ˜ì •
+ function fn_update(){
+     
+     var form = document.getElementById("view");
+     
+     form.action = "<c:url value='/board/update.do'/>";
+     form.submit();
+ }
+ </script>
 </head>
 <body>
-<jsp:include page="header.jsp" flush="true" />
-<form id="view" name="view" method="get">
-    <div>        <!-- ¿øÇÏ´Â ³¯Â¥Çü½ÄÀ¸·Î Ãâ·ÂÇÏ±â À§ÇØ fmtÅÂ±× »ç¿ë -->
-        ÀÛ¼ºÀÏÀÚ : <fmt:formatDate value="${view.regdate}" pattern="yyyy-MM-dd"/>
-                <!-- ³¯Â¥ Çü½Ä => yyyy 4ÀÚ¸®¿¬µµ, MM ¿ù, dd ÀÏ, a ¿ÀÀü/¿ÀÈÄ, HH 24½Ã°£Á¦, hh 12½Ã°£Á¦, mm ºĞ, ss ÃÊ -->
+<form id="view" name="view" method="post">
+    <div>        <!-- ì›í•˜ëŠ” ë‚ ì§œí˜•ì‹ìœ¼ë¡œ ì¶œë ¥í•˜ê¸° ìœ„í•´ fmtíƒœê·¸ ì‚¬ìš© -->
+        ì‘ì„±ì¼ì : <fmt:formatDate value="${view.regdate}" pattern="yyyy-MM-dd"/>
+                <!-- ë‚ ì§œ í˜•ì‹ => yyyy 4ìë¦¬ì—°ë„, MM ì›”, dd ì¼, a ì˜¤ì „/ì˜¤í›„, HH 24ì‹œê°„ì œ, hh 12ì‹œê°„ì œ, mm ë¶„, ss ì´ˆ -->
     </div>
     <div>
-        Á¶È¸¼ö : ${view.viewcnt}
+        ì¡°íšŒìˆ˜ : ${view.viewcnt}
     </div>
     <div>
-        Á¦¸ñ
-        <input name="title" id="title" size="80" value="${view.title}" placeholder="Á¦¸ñÀ» ÀÔ·ÂÇØÁÖ¼¼¿ä">
+        ì œëª©
+        <input name="title" id="title" size="80" value="${view.title}" placeholder="ì œëª©ì„ ì…ë ¥í•´ì£¼ì„¸ìš”">
     </div>
     <div>
-        ³»¿ë
-        <textarea name="content" id="content" rows="4" cols="80" placeholder="³»¿ëÀ» ÀÔ·ÂÇØÁÖ¼¼¿ä">${view.content}</textarea>
+        ë‚´ìš©
+        <textarea name="content" id="content" rows="4" cols="80" placeholder="ë‚´ìš©ì„ ì…ë ¥í•´ì£¼ì„¸ìš”">${view.content}</textarea>
     </div>
     <div>
-        ÀÌ¸§
-        <input name="writer" id="writer" value="${view.writer}" placeholder="ÀÌ¸§À» ÀÔ·ÂÇØÁÖ¼¼¿ä">
+        ì´ë¦„
+        <input name="writer" id="writer" value="${view.writer}" placeholder="ì´ë¦„ì„ ì…ë ¥í•´ì£¼ì„¸ìš”" readOnly>
     </div>
     <div style="width:650px; text-align: center;">
-        <!-- °Ô½Ã¹°¹øÈ£¸¦ hiddenÀ¸·Î Ã³¸® -->
+        <!-- ê²Œì‹œë¬¼ë²ˆí˜¸ë¥¼ hiddenìœ¼ë¡œ ì²˜ë¦¬ -->
         <input type="hidden" name="bno" value="${view.bno}">
-        <c:if test="${member.user_id eq boardVO.writer}">
-        	<button type="button" id="btnUpdete">¼öÁ¤</button>
-        	<button type="button" id="btnDelete">»èÁ¦</button>
-        </c:if>
     </div>
 </form>
+        <c:if test="${sessionScope.user_id eq view.writer}">
+        	<a href="#" onclick="fn_update()">ìˆ˜ì •</a>
+        	<a href="/board/delete.do?bno=${view.bno}">ì‚­ì œ</a>
+        </c:if>
+ <div style="width:650px; text-align: center;">
+        <br>
+        <!-- **ë¡œê·¸ì¸ í•œ íšŒì›ì—ê²Œë§Œ ëŒ“ê¸€ ì‘ì„±í¼ì´ ë³´ì´ê²Œ ì²˜ë¦¬ -->
+        <c:if test="${sessionScope.user_id != null}">    
+        <textarea rows="5" cols="80" id="replytext" placeholder="ëŒ“ê¸€ì„ ì‘ì„±í•´ì£¼ì„¸ìš”"></textarea>
+        <br>
+        <button type="button" id="btnReply">ëŒ“ê¸€ ì‘ì„±</button>
+        </c:if>
+    </div>
+    <!-- **ëŒ“ê¸€ ëª©ë¡ ì¶œë ¥í•  ìœ„ì¹˜ -->
+    <div id="listReply"></div>
 </body>
 </html>

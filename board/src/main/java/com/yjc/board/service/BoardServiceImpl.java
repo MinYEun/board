@@ -31,23 +31,12 @@ public class BoardServiceImpl implements BoardService{
 		String content = boardVO.getContent();
 		String writer = boardVO.getWriter();
 		
-		title = title.replace("<", "&lt;");
-		title = title.replace("<", "&gt;");
-		writer = writer.replace("<", "&lt;");
-		writer = writer.replace("<", "&gt;");
-		
-		// 공백문자 처리
-		title = title.replace(" ", "&nbsp;&nbsp;");
-		writer = writer.replace(" ", "&nbsp;&nbsp;");
-		
-		//줄바꿈 처리
-		content = content.replace("\n", "<br>");
-		
 		boardVO.setTitle(title);
 		boardVO.setContent(content);
 		boardVO.setWriter(writer);
 
 		boardDao.create(boardVO);
+
 	}
 	
 	@Override
@@ -66,12 +55,7 @@ public class BoardServiceImpl implements BoardService{
 	}
 	
 	@Override
-	public void increaseViewcnt(int bno, HttpSession session) throws Exception {
-		long update_time = 0;
-		//세션에 저장된 조회시간 검색
-		//최초로 조회할 경우 세션에 저장된 값 없기 때문에 if문실행X
-		if(session.getAttribute("update_time_"+bno) != null) {
-			update_time = (long)session.getAttribute("update_time_" + bno);
-		}
+	public int increaseViewcnt(BoardVO boardVO) throws Exception {
+		return boardDao.increaseViewcnt(boardVO);
 	}
 }

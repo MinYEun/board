@@ -10,6 +10,8 @@ public class MemberVO {
 	private String user_name;
 	private String email;
 	private Date user_regdate;
+	
+	
 	public String getUser_id() {
 		return user_id;
 	}

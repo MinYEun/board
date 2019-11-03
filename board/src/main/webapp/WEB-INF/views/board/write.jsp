@@ -1,61 +1,91 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
+<jsp:include page="header.jsp" flush="true" />
 <head>
-<meta charset="EUC-KR">
+<meta charset="UTF-8">
 <title>Insert title here</title>
 </head>
 <body>
+<style>
+    .fileDrop {
+        width:600px;
+        height: 200px;
+        border: 1px dotted blue;
+    }
+
+    small {
+        margin-left: 3px;
+        font-weight: bold;
+        color: gray;
+    }
+</style>
 <script>
     $(document).ready(function(){
-        $("#btnSave").click(function(){
-            //var title = document.form1.title.value; ==> name¼Ó¼ºÀ¸·Î Ã³¸®ÇÒ °æ¿ì
-            //var content = document.form1.content.value;
-            //var writer = document.form1.writer.value;
-            var title = $("#title").val();
-            var content = $("#content").val();
-            var writer = $("#writer").val();
-            if(title == ""){
-                alert("Á¦¸ñÀ» ÀÔ·ÂÇÏ¼¼¿ä");
-                document.form1.title.focus();
-                return;
-            }
-            if(content == ""){
-                alert("³»¿ëÀ» ÀÔ·ÂÇÏ¼¼¿ä");
-                document.form1.content.focus();
-                return;
-            }
-            if(writer == ""){
-                alert("ÀÌ¸§À» ÀÔ·ÂÇÏ¼¼¿ä");
-                document.form1.writer.focus();
-                return;
-            }
-            // Æû¿¡ ÀÔ·ÂÇÑ µ¥ÀÌÅÍ¸¦ ¼­¹ö·Î Àü¼Û
-            document.write.submit();
+        $(".fileDrop").on("dragenter dragover", function(event){
+            event.preventDefault(); // ê¸°ë³¸íš¨ê³¼ë¥¼ ë§‰ìŒ
+        });
+        // event : jQueryì˜ ì´ë²¤íŠ¸
+        // originalEvent : javascriptì˜ ì´ë²¤íŠ¸
+        $(".fileDrop").on("drop", function(event){
+            event.preventDefault(); // ê¸°ë³¸íš¨ê³¼ë¥¼ ë§‰ìŒ
+            // ë“œë˜ê·¸ëœ íŒŒì¼ì˜ ì •ë³´
+            var files = event.originalEvent.dataTransfer.files;
+            // ì²«ë²ˆì§¸ íŒŒì¼
+            var file = files[0];
+            // ì½˜ì†”ì—ì„œ íŒŒì¼ì •ë³´ í™•ì¸
+            console.log(file);
+
+            // ajaxë¡œ ì „ë‹¬í•  í¼ ê°ì²´
+            var formData = new FormData();
+            // í¼ ê°ì²´ì— íŒŒì¼ì¶”ê°€, append("ë³€ìˆ˜ëª…", ê°’)
+            formData.append("file", file);
+
+
+            $.ajax({
+                type: "post",
+                url: "/upload/uploadAjax.do",
+                data: formData,
+                // processData: true=> getë°©ì‹, false => postë°©ì‹
+                dataType: "text",
+                // contentType: true => application/x-www-form-urlencoded, 
+                //                false => multipart/form-data
+                processData: false,
+                contentType: false,
+                success: function(data){
+                    alert(data);
+                }
+            });
         });
     });
 </script>
 </head>
 <body>
-<jsp:include page="header.jsp" flush="true" />
-<h2>°Ô½Ã±Û ÀÛ¼º</h2>
-<form name="write" method="post" action="/board/insert.do">
+
+<h2>ê²Œì‹œê¸€ ì‘ì„±</h2>
+<form id="write" name="write" method="post" enctype="multipart/form-data">
     <div>
-        Á¦¸ñ
-        <input name="title" id="title" size="80" placeholder="Á¦¸ñÀ» ÀÔ·ÂÇØÁÖ¼¼¿ä">
+        ì œëª©
+        <input type="text" name="title" id="title" size="80" placeholder="ì œëª©ì„ ì…ë ¥í•´ì£¼ì„¸ìš”">
     </div>
     <div>
-        ³»¿ë
-        <textarea name="content" id="content" rows="4" cols="80" placeholder="³»¿ëÀ» ÀÔ·ÂÇØÁÖ¼¼¿ä"></textarea>
+        ë‚´ìš©
+        <textarea name="content" id="content" rows="4" cols="80" placeholder="ë‚´ìš©ì„ ì…ë ¥í•´ì£¼ì„¸ìš”"></textarea>
     </div>
     <div>
-        ÀÌ¸§
-        <input name="writer" id="writer" value="{list.writer}">
+        ì´ë¦„
+        <input type="text" name="writer" id="writer" value="${sessionScope.user_id}" readOnly>
     </div>
+    
+        <!-- íŒŒì¼ì„ ì—…ë¡œë“œí•  ì˜ì—­ -->
+    <div class="fileDrop"></div>
+    <!-- ì—…ë¡œë“œëœ íŒŒì¼ ëª©ë¡ -->
+    <div class="uploadedList"></div>  
+    
     <div style="width:650px; text-align: center;">
-        <button type="button" id="btnSave">È®ÀÎ</button>
-        <button type="button" onclick="location.href='/board/list.do'">Ãë¼Ò</button>
+        <button type="button" id="btnSave">í™•ì¸</button>
+        <button type="button" onclick="location.href='/board/list.do'">ì·¨ì†Œ</button>
     </div>
 </form>
 </body>

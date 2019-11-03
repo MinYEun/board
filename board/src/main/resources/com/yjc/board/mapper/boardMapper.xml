@@ -6,7 +6,10 @@
 <mapper namespace="board">
 	<!-- 게시물 목록 데이터 불러오기 -->
 	<select id="listAll" resultType="com.yjc.board.domain.BoardVO">
-		select * from board
+		select * 
+		 <!-- ** 댓글숫자표시 -->
+         (SELECT COUNT(*) FROM reply WHERE bno=board.bno) AS recnt
+        from board
 		order by bno desc
 	</select>
 	
@@ -20,21 +23,21 @@
    			(#{bno}, #{title}, #{content}, #{writer})
 	</insert>
 	
-	<select id="view" resultType="com.yjc.board.domain.BoardVO">
+	<select id="read" resultType="com.yjc.board.domain.BoardVO">
         SELECT * FROM board 
         WHERE bno = #{bno}
     </select>
     
      <update id="increaseViewcnt">
-        UPDATE board SET viewcnt = viewcnt + 1 
+        UPDATE board 
+        SET viewcnt = viewcnt + 1 
         WHERE bno = #{bno}
     </update>
     
     <update id="update">
         UPDATE board SET
             title = #{title},
-            content = #{content},
-            writer = #{writer}
+            content = #{content}
         WHERE bno = #{bno}
     </update>
     
@@ -42,4 +45,6 @@
         DELETE FROM board
         WHERE bno = #{bno}
     </delete>
+
+    
 </mapper>

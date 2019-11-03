@@ -26,7 +26,7 @@ public class BoardDAOImpl implements BoardDAO {
 	
 	@Override
 	public BoardVO read(int bno) throws Exception {
-		return sqlSession.selectOne("board.view", bno);
+		return sqlSession.selectOne("board.read", bno);
 	}
 	
 	@Override
@@ -40,8 +40,10 @@ public class BoardDAOImpl implements BoardDAO {
 	}
 	
 	@Override
-	public void increaseViewcnt(int bno) throws Exception {
-		sqlSession.update("board.increaseViewcnt", bno);
+	public int increaseViewcnt(BoardVO boardVO) throws Exception {
+		return sqlSession.update("board.increaseViewcnt", boardVO);
 	}
+		
+	
 
 }

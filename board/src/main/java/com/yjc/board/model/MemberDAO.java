@@ -8,7 +8,7 @@ public interface MemberDAO {
 	//회원가입
 	public void insertMember(MemberVO memberVO);
 	
-	public boolean loginCheck(MemberVO memberVO);
+	public MemberVO loginCheck(MemberVO memberVO);
 	
 	public MemberVO viewMember(MemberVO memberVO);
 	
